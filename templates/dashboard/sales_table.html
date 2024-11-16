@@ -1,0 +1,81 @@
+<table
+  class="shadow table table-hover m-0"
+  role="table"
+  aria-labelledby="table-title"
+>
+  <caption id="table-title" class="visually-hidden">
+    Sales Table: List of all sales transactions.
+  </caption>
+  <thead class="text-dark table-light border-0">
+    <tr>
+      <th scope="col" class="col-md-2">
+        Date
+        <a
+          href="{% url 'dashboard-sales' %}?page={{page_number}}&query={{ query }}&sort=timestamp&order={% if request.GET.sort == 'timestamp' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-sales' %}?page={{page_number}}&query={{ query }}&sort=timestamp&order={% if request.GET.sort == 'timestamp' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#sales-table"
+          role="button"
+          aria-label="Sort by Sale Date {% if request.GET.sort == 'timestamp' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'timestamp' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if request.GET.sort == 'timestamp' %}active{% endif %}"
+          ></i>
+        </a>
+      </th>
+      <th scope="col" class="col-md-2" aria-label="Transaction Number">No</th>
+      <th scope="col" class="col-md-4" aria-label="Products Sold">Products</th>
+      <th scope="col" class="text-center col-md-1" aria-label="Sale Total Sum">
+        Total
+        <a
+          href="{% url 'dashboard-sales' %}?page={{page_number}}&query={{ query }}&sort=total_price&order={% if request.GET.sort == 'total_price' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-sales' %}?page={{page_number}}&query={{ query }}&sort=total_price&order={% if request.GET.sort == 'total_price' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#sales-table"
+          role="button"
+          aria-label="Sort by Sale Total Sum {% if request.GET.sort == 'total_price' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'total_price' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if request.GET.sort == 'total_price' %}active{% endif %}"
+          ></i>
+        </a>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for sale in items %}
+    <tr>
+      <td aria-label="Sale Date">{{ sale.timestamp|date:"j.n.y H:i" }}</td>
+      <td aria-label="Sale Transaction ID">{{ sale.transaction_id }}</td>
+      <td>
+        <table class="table table-hover p-0 m-0" aria-label="Products in Sale">
+          <tbody>
+            {% for item in sale.items.all %}
+            <tr class="fs-6">
+              <td
+                class="table-primary border-top-0 border-end-0 border-start-0 border-light rounded col-md-6"
+                aria-label="Sale Item Name"
+              >
+                {{ item.product_name }}
+              </td>
+              <td class="text-center col-md-3" aria-label="Sale Item Quantity">
+                <span class="text-secondary fw-lighter me-2">qty:</span
+                >{{item.quantity}}
+              </td>
+              <td class="text-center col-md-3" aria-label="Sale Item Price">
+                <span class="text-secondary fw-lighter me-2">price:</span
+                >{{item.price}}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </td>
+      <td class="text-center" aria-label="Sale Total Sum">
+        {{ sale.total_price }}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include 'partials/pagination.html' with hx_target="#sales-table"%}

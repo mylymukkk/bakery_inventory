@@ -1,0 +1,64 @@
+{% extends 'partials/base.html' %} {% load crispy_forms_tags %}
+
+<!-- prettier-ignore -->
+{% block nav %}
+{% include 'partials/nav.html' %}
+{% endblock %}
+
+{% block content %}
+
+<section class="container mb-4">
+  <header
+    class="row my-3 bg-info rounded p-3 justify-content-between align-items-center"
+  >
+    <div class="col-md-4">
+      <h1
+        class="h4 text-white fw-normal text-uppercase m-0"
+        id="supply-log-heading"
+      >
+        Supply Log
+      </h1>
+    </div>
+    <div class="col-md-4">
+      <label for="search-input" class="visually-hidden">Search for batch</label>
+      <input
+        class="form-control"
+        type="search"
+        placeholder="Search"
+        aria-label="Search for batch"
+        hx-get="{% url 'dashboard-stock' %}?page={{page_number}}&sort={{ sort_by }}&order={{ sort_order }}"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#stock-table"
+        name="query"
+      />
+    </div>
+  </header>
+  <div class="row">
+    <div class="col-md-3">
+      <div class="shadow border bg-white p-3 mb-4 mb-md-0">
+        <h4 id="add-batch-heading">Add Batch</h4>
+        <hr />
+        <form method="post" aria-labelledby="add-batch-heading">
+          {% csrf_token %} {{ form|crispy }}
+          <div class="d-grid">
+            <input
+              class="btn btn-success px-4"
+              type="submit"
+              value="Add Batch"
+              aria-label="Submit the batch form"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div
+      id="stock-table"
+      class="col-md-9"
+      aria-live="polite"
+      aria-describedby="supply-log-heading"
+    >
+      {% include 'dashboard/stock_table.html' %}
+    </div>
+  </div>
+</section>
+{% endblock %}

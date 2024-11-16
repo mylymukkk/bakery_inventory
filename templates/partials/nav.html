@@ -1,0 +1,50 @@
+<nav
+  class="container sticky-top"
+  role="navigation"
+  aria-label="Main Navigation"
+>
+  <ul class="nav nav-tabs mb-3 bg-white">
+    <li class="nav-item">
+      <a
+        class="nav-link text-secondary {% if request.resolver_match.url_name == 'dashboard-index' %}active {% endif %}"
+        aria-current="{% if request.resolver_match.url_name == 'dashboard-index' %}page{% endif %}"
+        href="{% url 'dashboard-index' %}"
+        >Home</a
+      >
+    </li>
+    {% if user.is_superuser %}
+    <li class="nav-item">
+      <a
+        class="nav-link text-secondary {% if request.resolver_match.url_name == 'dashboard-products' %}active {% endif %}"
+        aria-current="{% if request.resolver_match.url_name == 'dashboard-products' %}page{% endif %}"
+        href="{% url 'dashboard-products' %}"
+        >Products</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link text-secondary {% if request.resolver_match.url_name == 'dashboard-stock' %}active {% endif %}"
+        aria-current="{% if request.resolver_match.url_name == 'dashboard-stock' %}page{% endif %}"
+        href="{% url 'dashboard-stock' %}"
+        >Stock</a
+      >
+    </li>
+    {% endif %}
+    <li class="nav-item">
+      <a
+        class="nav-link text-secondary {% if request.resolver_match.url_name == 'dashboard-sales' %}active {% endif %}"
+        aria-current="{% if request.resolver_match.url_name == 'dashboard-sales' %}page{% endif %}"
+        href="{% url 'dashboard-sales' %}"
+        >Sales</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link text-secondary {% if request.resolver_match.url_name == 'dashboard-report' %}active {% endif %}"
+        aria-current="{% if request.resolver_match.url_name == 'dashboard-report' %}page{% endif %}"
+        href="{% url 'dashboard-report' %}"
+        >Report</a
+      >
+    </li>
+  </ul>
+</nav>

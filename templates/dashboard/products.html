@@ -1,0 +1,67 @@
+{% extends 'partials/base.html' %} {% load crispy_forms_tags %}
+
+<!-- prettier-ignore -->
+{% block nav %}
+{% include 'partials/nav.html' %}
+{% endblock %}
+
+{% block content %}
+
+<section class="container mb-4">
+  <header
+    class="row my-3 bg-info rounded p-3 justify-content-between align-items-center"
+  >
+    <div class="col-md-4">
+      <h1
+        class="h4 text-white fw-normal text-uppercase m-0"
+        id="product-list-heading"
+      >
+        Product List
+      </h1>
+    </div>
+    <div class="col-md-4">
+      <label for="search-input" class="visually-hidden"
+        >Search for product</label
+      >
+      <input
+        class="form-control"
+        type="search"
+        placeholder="Search"
+        aria-label="Search for product"
+        hx-get="{% url 'dashboard-products' %}?page={{page_number}}&sort={{ sort_by }}&order={{ sort_order }}"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#products-table"
+        name="query"
+      />
+    </div>
+  </header>
+  <div class="row">
+    <div class="col-md-4">
+      <div class="shadow border bg-white p-3 mb-4 mb-md-0">
+        <h4 id="add-product-heading">Add Product</h4>
+        <hr />
+        <form method="post" aria-labelledby="add-product-heading">
+          {% csrf_token %} {{form|crispy}}
+          <div class="d-grid">
+            <input
+              class="btn btn-success px-4"
+              type="submit"
+              value="Add Product"
+              aria-label="Submit the product form"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+    <div
+      id="products-table"
+      class="col-md-8"
+      aria-live="polite"
+      aria-describedby="product-list-heading"
+    >
+      {% include 'dashboard/products_table.html' %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

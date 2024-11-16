@@ -1,0 +1,92 @@
+{% extends 'partials/base.html' %}
+
+<!-- prettier-ignore -->
+{% block nav %}
+{% include 'partials/nav.html' %}
+{% endblock %}
+
+{% block content %}
+
+<section class="container mb-4">
+  <header
+    class="row my-3 bg-info rounded p-3 justify-content-between align-items-center"
+  >
+    <div class="col-md-4">
+      <h1
+        class="h4 text-white fw-normal text-uppercase m-0"
+        id="report-heading"
+      >
+        Report
+      </h1>
+    </div>
+    <div class="col-md-4">
+      <label for="search-input" class="visually-hidden"
+        >Search for product in report</label
+      >
+      <input
+        class="form-control"
+        type="search"
+        placeholder="Search"
+        aria-label="Search for product in report"
+        hx-get="{% url 'dashboard-report' %}?page={{page_number}}&sort={{ sort_by }}&order={{ sort_order }}"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#report-table"
+        name="query"
+        value="{{ query }}"
+      />
+    </div>
+  </header>
+  <div class="row mb-3">
+    <form method="post" class="d-flex align-items-end gap-2">
+      {% csrf_token %}
+      <div class="form-group d-flex flex-row align-items-end">
+        <label for="start_date" class="form-label text-secondary fs-6 me-2"
+          >From:</label
+        >
+        <input
+          class="form-control"
+          type="date"
+          id="start_date"
+          name="start_date"
+          value="{{ start_date }}"
+          required
+          aria-label="Select the start date for filtering the report"
+        />
+      </div>
+      <div class="form-group d-flex flex-row align-items-end">
+        <label for="end_date" class="form-label text-secondary fs-6 me-2"
+          >To:</label
+        >
+        <input
+          class="form-control"
+          type="date"
+          id="end_date"
+          name="end_date"
+          value="{{ end_date }}"
+          required
+          aria-label="Select the end date for filtering the report"
+        />
+      </div>
+      <button
+        class="btn btn-info text-white"
+        type="submit"
+        name="filter"
+        hx-post="{% url 'dashboard-report' %}?query={{query}}&page={{page_number}}&sort={{ sort_by }}&order={{ sort_order }}"
+        hx-target="#report-table"
+        aria-label="Apply the date filter to update the report"
+      >
+        Filter
+      </button>
+    </form>
+  </div>
+  <div
+    id="report-table"
+    class="row"
+    aria-live="polite"
+    aria-describedby="report-heading"
+  >
+    {% include 'dashboard/report_table.html' %}
+  </div>
+</section>
+
+{% endblock %}

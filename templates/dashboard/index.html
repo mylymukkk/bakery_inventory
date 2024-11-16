@@ -1,0 +1,58 @@
+{% extends 'partials/base.html' %}
+
+<!-- prettier-ignore -->
+{% block nav %}
+{% include 'partials/nav.html' %}
+{% endblock %}
+
+{% block content %}
+<section class="container mb-2">
+  <header
+    class="row my-3 bg-info rounded p-3 justify-content-between align-items-center"
+  >
+    <div class="col-md-4">
+      <h1
+        class="h4 m-0 text-white fw-normal text-uppercase"
+        id="stock-availability-heading"
+      >
+        Stock Availability
+      </h1>
+    </div>
+    <div class="d-flex gap-2 col-md-4 text-end p-0">
+      <label for="search-input" class="visually-hidden"
+        >Search for product</label
+      >
+      <input
+        id="search-input"
+        class="form-control"
+        type="search"
+        placeholder="Search"
+        aria-label="Search for product"
+        hx-get="{% url 'dashboard-index' %}?page={{page_number}}&sort={{ sort_by }}&order={{ sort_order }}"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#index-table"
+        name="query"
+      />
+      <button
+        class="btn btn-light"
+        hx-get="{% url 'dashboard-index' %}?update=true"
+        hx-target="#index-table"
+        aria-label="Update stock data"
+      >
+        <i class="bi bi-arrow-clockwise"></i>
+      </button>
+    </div>
+  </header>
+
+  <div class="row">
+    <div
+      id="index-table"
+      class="col-lg-9 m-auto"
+      aria-live="polite"
+      aria-describedby="stock-availability-heading"
+    >
+      {% include 'dashboard/index_table.html' %}
+    </div>
+  </div>
+</section>
+{% endblock %}

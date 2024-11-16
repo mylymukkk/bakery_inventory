@@ -1,0 +1,22 @@
+.asteriskField {
+  color: red;
+}
+
+.icon {
+  /* color: #292b2c; */
+  color: aquamarine;
+  transition: color 0.3s;
+}
+
+.icon-light {
+  color: #f7f7f7;
+}
+
+.icon.active {
+  color: #5bc0de;
+  transition: color 0.3s;
+}
+
+.icon-light.active {
+  color: #5bc0de;
+}

@@ -1,0 +1,87 @@
+<table
+  class="shadow-sm table table-hover bg-white m-0"
+  role="table"
+  aria-labelledby="table-title"
+>
+  <caption id="table-title" class="visually-hidden">
+    Product List
+  </caption>
+  <thead class="text-white table-dark">
+    <tr>
+      <td scope="col" class="col-md-2">
+        Product
+        <a
+          href="{% url 'dashboard-products' %}?page={{page_number}}&query={{ query }}&sort=name&order={% if request.GET.sort == 'name' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-products' %}?page={{page_number}}&query={{ query }}&sort=name&order={% if request.GET.sort == 'name' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#products-table"
+          role="button"
+          aria-label="Sort by Product {% if request.GET.sort == 'name' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'name' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon-light {% if request.GET.sort == 'name' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col" class="col-md-2">
+        Category
+        <a
+          href="{% url 'dashboard-products' %}?page={{page_number}}&query={{ query }}&sort=category&order={% if request.GET.sort == 'category' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-products' %}?page={{page_number}}&query={{ query }}&sort=category&order={% if request.GET.sort == 'category' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#products-table"
+          role="button"
+          aria-label="Sort by Category {% if request.GET.sort == 'category' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'category' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon-light {% if request.GET.sort == 'category' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col" class="col-md-1">Code</td>
+      <td scope="col" class="text-center col-md-1">
+        Price
+        <a
+          href="{% url 'dashboard-products' %}?page={{page_number}}&query={{ query }}&sort=price&order={% if request.GET.sort == 'price' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-products' %}?page={{page_number}}&query={{ query }}&sort=price&order={% if request.GET.sort == 'price' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#products-table"
+          role="button"
+          aria-label="Sort by Price {% if request.GET.sort == 'price' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'price' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon-light {% if request.GET.sort == 'price' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col" class="col-md-2" aria-label="Actions"></td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr>
+      <th scope="row" aria-label="Product Name">{{item.name}}</th>
+      <td aria-label="Product Category">{{item.category}}</td>
+      <td aria-label="Product Code">{{item.code}}</td>
+      <td class="text-center" aria-label="Product Price">{{item.price}}</td>
+      <td class="text-end">
+        <a
+          class="btn btn-info btn-sm text-white"
+          href="{% url 'dashboard-product-update' item.id %}"
+          title="Edit"
+          aria-label="Edit Product Info"
+          ><i class="bi bi-pencil-fill"></i
+        ></a>
+        <a
+          class="btn btn-danger btn-sm"
+          href="{% url 'dashboard-product-delete' item.id %}"
+          title="Delete"
+          aria-label="Delete Product"
+          ><i class="bi bi-trash-fill"></i
+        ></a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include 'partials/pagination.html' with hx_target="#products-table"%}

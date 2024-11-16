@@ -1,0 +1,13 @@
+{% extends 'partials/delete_page.html' %}
+
+<!-- prettier-ignore -->
+{% block message %}
+<p>
+  Are you sure you want to delete
+  <span class="fw-bold">{{item.product.name}} Batch</span> from
+  <span class="fw-bold">{{item.record_date|date:"j.n.y H:i"}}</span>?
+</p>
+{% endblock %}
+<!-- prettier-ignore -->
+{% block delete-link %}{% url 'dashboard-stock' %}{% endblock%}
+{% block cancel-link %}{% url 'dashboard-stock' %}{% endblock%}

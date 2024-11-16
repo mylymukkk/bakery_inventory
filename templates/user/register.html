@@ -1,0 +1,31 @@
+{% extends 'partials/base.html' %} {% load crispy_forms_tags %}
+
+<!-- prettier-ignore -->
+{% block content%}
+
+<div class="container">
+  <div class="row my-3 justify-content-center">
+    <div class="col-md-5">
+      <div class="border rounded p-3 shadow">
+        <h3 class="text-uppercase fw-light" id="registration-header">
+          Registration Page
+        </h3>
+        <hr />
+        <form method="post" aria-labelledby="registration-header">
+          {% csrf_token %} {{form|crispy}}
+          <div class="d-grid">
+            <input
+              class="btn btn-success"
+              type="submit"
+              value="Register"
+              aria-label="Register"
+              aria-label="Submit registration form to create an account"
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock%}

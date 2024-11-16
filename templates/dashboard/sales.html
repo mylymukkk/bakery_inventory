@@ -1,0 +1,44 @@
+{% extends 'partials/base.html' %}
+
+<!-- prettier-ignore -->
+{% block nav %}
+{% include 'partials/nav.html' %}
+{% endblock %}
+
+{% block content %}
+
+<section class="container mb-4">
+  <header
+    class="row my-3 bg-info rounded p-3 justify-content-between align-items-center"
+  >
+    <div class="col-md-4">
+      <h1 class="h4 text-white fw-normal text-uppercase m-0" id="sales-heading">
+        Sales
+      </h1>
+    </div>
+    <div class="col-md-4">
+      <label for="search-input" class="visually-hidden">Search for sale</label>
+      <input
+        class="form-control"
+        type="search"
+        placeholder="Search"
+        aria-label="Search for sale"
+        hx-get="{% url 'dashboard-sales' %}?page={{page_number}}&sort={{ sort_by }}&order={{ sort_order }}"
+        hx-trigger="keyup changed delay:500ms"
+        hx-target="#sales-table"
+        name="query"
+      />
+    </div>
+  </header>
+  <div class="row">
+    <div
+      id="sales-table"
+      class="col-md-9 m-auto"
+      aria-live="polite"
+      aria-describedby="sales-heading"
+    >
+      {% include 'dashboard/sales_table.html' %}
+    </div>
+  </div>
+</section>
+{% endblock %}

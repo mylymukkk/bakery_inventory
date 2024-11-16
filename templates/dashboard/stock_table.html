@@ -1,0 +1,135 @@
+<table
+  class="shadow-sm table table-hover bg-white m-0"
+  role="table"
+  aria-labelledby="table-title"
+>
+  <caption id="table-title" class="visually-hidden">
+    Supply Log
+  </caption>
+  <thead class="text-white table-dark">
+    <tr>
+      <td scope="col">
+        Record Date
+        <a
+          href="{% url 'dashboard-products' %}?page={{page_number}}&query={{ query }}&sort=price&order={% if request.GET.sort == 'price' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-stock' %}?page={{page_number}}&query={{ query }}&sort=record_date&order={% if request.GET.sort == 'record_date' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#stock-table"
+          role="button"
+          aria-label="Sort by Record Date {% if request.GET.sort == 'record_date' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'record_date' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon-light {% if request.GET.sort == 'record_date' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col">
+        Product
+        <a
+          href="{% url 'dashboard-stock' %}?page={{page_number}}&query={{ query }}&sort=product__name&order={% if request.GET.sort == 'product__name' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-stock' %}?page={{page_number}}&query={{ query }}&sort=product__name&order={% if request.GET.sort == 'product__name' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#stock-table"
+          role="button"
+          aria-label="Sort by Product Name {% if request.GET.sort == 'product__name' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'product__name' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon-light {% if request.GET.sort == 'product__name' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col">Code</td>
+      <td scope="col" class="text-center">
+        Qty
+        <a
+          href="{% url 'dashboard-stock' %}?page={{page_number}}&query={{ query }}&sort=quantity&order={% if request.GET.sort == 'quantity' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-stock' %}?page={{page_number}}&query={{ query }}&sort=quantity&order={% if request.GET.sort == 'quantity' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#stock-table"
+          role="button"
+          aria-label="Sort by Quantity {% if request.GET.sort == 'quantity' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'quantity' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon-light {% if request.GET.sort == 'quantity' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col" class="text-center">
+        Left
+        <a
+          href="{% url 'dashboard-stock' %}?page={{page_number}}&query={{ query }}&sort=left&order={% if request.GET.sort == 'left' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#stock-table"
+          hx-get="{% url 'dashboard-stock' %}?page={{page_number}}&query={{ query }}&sort=left&order={% if request.GET.sort == 'left' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#stock-table"
+          role="button"
+          aria-label="Sort by Left Quantity {% if request.GET.sort == 'left' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'left' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon-light {% if request.GET.sort == 'left' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col" class="text-center">
+        Expiry Date
+        <a
+          href="{% url 'dashboard-stock' %}?page={{page_number}}&query={{ query }}&sort=expiry_date&order={% if request.GET.sort == 'expiry_date' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-stock' %}?page={{page_number}}&query={{ query }}&sort=expiry_date&order={% if request.GET.sort == 'expiry_date' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#stock-table"
+          role="button"
+          aria-label="Sort by Expiry Date {% if request.GET.sort == 'expiry_date' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'expiry_date' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon-light {% if request.GET.sort == 'expiry_date' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col" aria-label="Actions"></td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr
+      class="{% if item.left == 0 %} table-secondary {% elif item.expiry_date < today %} table-danger {% endif %}"
+    >
+      <td aria-label="Record Date">{{item.record_date|date:"j.n.y H:i"}}</td>
+      <th scope="row" aria-label="Batch Product Name">{{item.product.name}}</th>
+      <td aria-label="Batch Product Code">{{item.product.code}}</td>
+      <td class="text-center" aria-label="Batch Product Quantity">
+        {{item.quantity}}
+      </td>
+      <td class="text-center" aria-label="Batch Product Left Quantity">
+        {{item.left}}
+      </td>
+      <td class="text-center" aria-label="Batch Product Expiry Date">
+        {{item.expiry_date|date:"j.n.y"}}
+      </td>
+      <td class="text-end">
+        <a
+          class="btn btn-info btn-sm text-white"
+          href="{% url 'dashboard-batch-update' item.id %}"
+          title="Edit"
+          aria-label="Edit Batch Info"
+          ><i class="bi bi-pencil-fill"></i
+        ></a>
+        <a
+          class="btn btn-secondary btn-sm"
+          href="{% url 'dashboard-batch-write-off' item.id%}"
+          title="Write off"
+          aria-label="Write Off Product"
+          ><i class="bi bi-slash-circle-fill"></i>
+        </a>
+        <a
+          class="btn btn-danger btn-sm"
+          href="{% url 'dashboard-batch-delete' item.id%}"
+          title="Delete"
+          aria-label="Delete Batch"
+          ><i class="bi bi-trash-fill"></i>
+        </a>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include 'partials/pagination.html' with hx_target="#stock-table"%}

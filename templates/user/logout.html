@@ -1,0 +1,36 @@
+{% extends 'partials/base.html' %}
+
+<!-- prettier-ignore -->
+{% block content %}
+{% csrf_token %}
+
+<div class="container">
+  <div class="row my-3 justify-content-center">
+    <div class="col-md-5">
+      <div class="border rounded p-3 shadow">
+        <h3 class="text-uppercase fw-light" id="logout-header">Logout Page</h3>
+        <hr />
+        <div class="pb-1 alert alert-danger" role="alert" aria-live="assertive">
+          <p>You have been logged out</p>
+        </div>
+        <hr />
+        <div class="d-flex justify-content-end">
+          <a
+            href="{% url 'user-login' %}"
+            class="btn btn-secondary me-2"
+            aria-label="Log In"
+            >Log in</a
+          >
+          <a
+            href="{% url 'user-register' %}"
+            class="btn btn-secondary"
+            aria-label="Register"
+            >Register</a
+          >
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

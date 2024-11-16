@@ -1,0 +1,11 @@
+{% extends 'partials/delete_page.html' %}
+
+<!-- prettier-ignore -->
+{% block message %}
+<p>
+  Are you sure you want to delete "<span class="fw-bold">{{item.name}}</span>"?
+</p>
+{% endblock %}
+<!-- prettier-ignore -->
+{% block delete-link %}{% url 'dashboard-products' %}{% endblock %}
+{% block cancel-link %}{% url 'dashboard-products' %}{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'partials/base.html' %}
+
+<!-- prettier-ignore -->
+{% block content %}
+
+<div class="container">
+  <div class="row my-3 justify-content-center">
+    <div class="col-md-5">
+      <div class="card shadow">
+        <div
+          class="card-header bg-info d-flex justify-content-between align-items-center"
+        >
+          <h5
+            class="text-white text-uppercase fw-light mb-0"
+            id="profile-info-header"
+          >
+            Profile Information
+          </h5>
+          <a
+            class="btn btn-link text-white"
+            href="{% url 'user-profile-update' %}"
+            aria-label="Edit your profile information"
+            >Edit</a
+          >
+        </div>
+        <div class="row p-3">
+          <div class="col-md-10">
+            <table
+              class="table table-borderless mb-0"
+              aria-labelledby="profile-info-header"
+            >
+              <tbody>
+                <tr class="border-bottom">
+                  <th scope="row" class="fw-normal table-light rounded ps-3">
+                    Username
+                  </th>
+                  <td class="ps-3" aria-label="User's username">
+                    {{ user.username }}
+                  </td>
+                </tr>
+                <tr class="border-bottom">
+                  <th scope="row" class="fw-normal table-light rounded ps-3">
+                    Email
+                  </th>
+                  <td class="ps-3" aria-label="User's email">
+                    {{ user.email }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

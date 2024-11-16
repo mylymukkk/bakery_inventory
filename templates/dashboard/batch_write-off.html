@@ -1,0 +1,46 @@
+{% extends 'partials/base.html' %} {% load crispy_forms_tags %}
+
+<!-- prettier-ignore -->
+{% block nav %}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row my-3 justify-content-center">
+    <div class="col-md-4">
+      <div class="card shadow">
+        <div
+          class="card-header bg-info d-flex justify-content-between align-items-center"
+        >
+          <div class="text-white text-uppercase fw-light fs-4">
+            Write off<span class="text-white text-capitalize fw-light fs-6 ms-2"
+              >{{item.product}}</span
+            >
+          </div>
+          <a
+            class="btn btn-link text-white"
+            href="{% url 'dashboard-stock' %}"
+            aria-label="Cancel item write-off and return to stock page"
+            >Cancel</a
+          >
+        </div>
+
+        <div class="row p-3">
+          <div class="col-md-12">
+            <form method="post">
+              {% csrf_token %} {{form|crispy}}
+              <div class="d-grid">
+                <input
+                  class="btn btn-danger"
+                  type="submit"
+                  value="Write off"
+                  aria-label="Confirm item write-off"
+                />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,92 @@
+<table
+  role="table"
+  class="table table-hover m-0 shadow"
+  aria-labelledby="table-title"
+>
+  <caption id="table-title" class="visually-hidden">
+    Stock Availability Data
+  </caption>
+  <thead class="text-dark table-light border-0">
+    <tr>
+      <td scope="col" class="col-md-2">
+        Product
+        <a
+          href="{% url 'dashboard-index' %}?page={{page_number}}&query={{ query }}&sort=name&order={% if request.GET.sort == 'name' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-index' %}?page={{page_number}}&query={{ query }}&sort=name&order={% if request.GET.sort == 'name' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#index-table"
+          role="button"
+          aria-label="Sort by Product Name {% if request.GET.sort == 'name' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'name' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if request.GET.sort == 'name' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col" class="col-md-2">
+        Category
+        <a
+          href="{% url 'dashboard-index' %}?page={{page_number}}&query={{ query }}&sort=category&order={% if request.GET.sort == 'category' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-index' %}?page={{page_number}}&query={{ query }}&sort=category&order={% if request.GET.sort == 'category' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#index-table"
+          role="button"
+          aria-label="Sort by Category {% if request.GET.sort == 'category' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'category' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if request.GET.sort == 'category' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col" class="col-md-1">Code</td>
+      <td scope="col" class="text-center col-md-1">
+        Price
+        <a
+          href="{% url 'dashboard-index' %}?page={{page_number}}&query={{ query }}&sort=price&order={% if request.GET.sort == 'price' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-index' %}?page={{page_number}}&query={{ query }}&sort=price&order={% if request.GET.sort == 'price' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#index-table"
+          role="button"
+          aria-label="Sort by Price {% if request.GET.sort == 'price' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'price' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if request.GET.sort == 'price' %}active{% endif %}"
+          ></i>
+        </a>
+      </td>
+      <td scope="col" class="text-center col-md-1">
+        Quantity
+        <a
+          href="{% url 'dashboard-index' %}?page={{page_number}}&query={{ query }}&sort=quantity&order={% if request.GET.sort == 'quantity' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-get="{% url 'dashboard-index' %}?page={{page_number}}&query={{ query }}&sort=quantity&order={% if request.GET.sort == 'quantity' and request.GET.order == 'asc' %}desc{% else %}asc{% endif %}"
+          hx-target="#index-table"
+          role="button"
+          aria-label="Sort by Quantity {% if request.GET.sort == 'quantity' and request.GET.order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+          tabindex="0"
+        >
+          <i
+            class="bi bi-caret-{% if request.GET.sort == 'quantity' and request.GET.order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if request.GET.sort == 'quantity' %} active {% endif %}"
+          ></i>
+        </a>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    {% for item in items %}
+    <tr {% if item.quantity < 10 %} class="table-danger" {% endif %}>
+      <th class="col-md-2" scope="row" aria-label="Product Name">
+        {{item.name}}
+      </th>
+      <td class="col-md-2" aria-label="Product Category">{{item.category}}</td>
+      <td class="col-md-1" aria-label="Product Code">{{item.code}}</td>
+      <td class="text-center col-md-1" aria-label="Product Price">
+        {{item.price}}
+      </td>
+      <td class="text-center col-md-1" aria-label="Quantity">
+        {{item.quantity}}
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% include 'partials/pagination.html' with hx_target="#index-table"%}

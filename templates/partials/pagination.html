@@ -1,0 +1,48 @@
+{% if items.object_list %}
+<nav
+  class="my-2 d-flex justify-content-center"
+  role="navigation"
+  aria-label="Pagination Navigation"
+>
+  <ul class="pagination m-0" hx-target="{{ hx_target }}">
+    {% if items.has_previous %}
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="?page={{items.previous_page_number}}&query={{query}}&sort={{sort_by}}&order={{sort_order}}"
+        hx-get="?page={{items.previous_page_number}}&query={{query}}&sort={{sort_by}}&order={{sort_order}}"
+        aria-label="Previous page, Page {{items.previous_page_number}}"
+        tabindex="0"
+      >
+        <span aria-hidden="true">&laquo;</span>
+        <span class="visually-hidden">Previous page</span>
+      </a>
+    </li>
+    {% endif %}{% for i in items.paginator.page_range %}
+    <li class="page-item {% if items.number == i %}active-page{% endif %}">
+      <a
+        class="page-link"
+        href="?page={{i}}&query={{query}}&sort={{sort_by}}&order={{sort_order}}"
+        hx-get="?page={{i}}&query={{query}}&sort={{sort_by}}&order={{sort_order}}"
+        aria-label="Page {{i}}"
+        tabindex="0"
+        >{{ i }}
+      </a>
+    </li>
+    {% endfor %} {% if items.has_next %}
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="?page={{items.next_page_number}}&query={{query}}&sort={{sort_by}}&order={{sort_order}}"
+        hx-get="?page={{items.next_page_number}}&query={{query}}&sort={{sort_by}}&order={{sort_order}}"
+        aria-label="Next page, Page {{items.next_page_number}}"
+        tabindex="0"
+      >
+        <span aria-hidden="true">&raquo;</span>
+        <span class="visually-hidden">Next page</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+{% endif %}

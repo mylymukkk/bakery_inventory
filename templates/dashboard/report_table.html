@@ -1,0 +1,154 @@
+{% if start_date and end_date and query or start_date and end_date%}
+<div class="col-md-8">
+  <table
+    class="shadow table table-hover bg-white m-0"
+    role="table"
+    aria-labelledby="table-title"
+  >
+    <caption id="table-title" class="visually-hidden">
+      Report Table: Sales, Revenue, Losses, and Profit Data
+    </caption>
+    <thead class="text-dark table-secondary border-0">
+      <tr>
+        <td scope="col">
+          Product
+          <a
+            href="{% url 'dashboard-report' %}?page={{ page_number }}&query={{ query }}&sort=product_name&order={% if sort_by == 'product_name' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-get="{% url 'dashboard-report' %}?page={{ page_number }}&query={{ query }}&sort=product_name&order={% if sort_by == 'product_name' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-target="#report-table"
+            role="button"
+            aria-label="Sort by Product {% if sort_by == 'product_name' and sort_order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+            tabindex="0"
+          >
+            <i
+              class="bi bi-caret-{% if sort_by == 'product_name' and sort_order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if sort_by == 'product_name' %}active{% endif %}"
+            ></i>
+          </a>
+        </td>
+        <td scope="col" class="text-center">
+          Sales
+          <a
+            href="{% url 'dashboard-report' %}?page={{page_number}}&query={{ query }}&sort=sales&order={% if sort_by == 'sales' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-get="{% url 'dashboard-report' %}?page={{page_number}}&query={{ query }}&sort=sales&order={% if sort_by == 'sales' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-target="#report-table"
+            role="button"
+            aria-label="Sort by Sale Quantity {% if sort_by == 'sales' and sort_order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+            tabindex="0"
+          >
+            <i
+              class="bi bi-caret-{% if sort_by == 'sales' and sort_order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if sort_by == 'sales' %}active{% endif %}"
+            ></i>
+          </a>
+        </td>
+        <td scope="col" class="text-center">
+          Written Off
+          <a
+            href="{% url 'dashboard-report' %}?page={{page_number}}&query={{ query }}&sort=written_off&order={% if sort_by == 'written_off' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-get="{% url 'dashboard-report' %}?page={{page_number}}&query={{ query }}&sort=written_off&order={% if sort_by == 'written_off' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-target="#report-table"
+            role="button"
+            aria-label="Sort by Written Off Quantity {% if sort_by == 'written_off' and sort_order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+            tabindex="0"
+          >
+            <i
+              class="bi bi-caret-{% if sort_by == 'written_off' and sort_order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if sort_by == 'written_off' %}active{% endif %}"
+            ></i>
+          </a>
+        </td>
+        <td scope="col" class="text-center">
+          Revenue
+          <a
+            href="{% url 'dashboard-report' %}?page={{page_number}}&query={{ query }}&sort=revenue&order={% if sort_by == 'revenue' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-get="{% url 'dashboard-report' %}?page={{page_number}}&query={{ query }}&sort=revenue&order={% if sort_by == 'revenue' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-target="#report-table"
+            role="button"
+            aria-label="Sort by Revenue {% if sort_by == 'revenue' and sort_order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+            tabindex="0"
+          >
+            <i
+              class="bi bi-caret-{% if sort_by == 'revenue' and sort_order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if sort_by == 'revenue' %}active{% endif %}"
+            ></i>
+          </a>
+        </td>
+        <td scope="col" class="text-center">
+          Loss
+          <a
+            href="{% url 'dashboard-report' %}?page={{page_number}}&query={{ query }}&sort=loss&order={% if sort_by == 'loss' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-get="{% url 'dashboard-report' %}?page={{page_number}}&query={{ query }}&sort=loss&order={% if sort_by == 'loss' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-target="#report-table"
+            role="button"
+            aria-label="Sort by Loss {% if sort_by == 'loss' and sort_order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+            tabindex="0"
+          >
+            <i
+              class="bi bi-caret-{% if sort_by == 'loss' and sort_order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if sort_by == 'loss' %}active{% endif %}"
+            ></i>
+          </a>
+        </td>
+        <td scope="col" class="text-center">
+          Profit
+          <a
+            href="{% url 'dashboard-report' %}?page={{page_number}}&query={{ query }}&sort=profit&order={% if sort_by == 'profit' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-get="{% url 'dashboard-report' %}?page={{page_number}}&query={{ query }}&sort=profit&order={% if sort_by == 'profit' and sort_order == 'asc' %}desc{% else %}asc{% endif %}"
+            hx-target="#report-table"
+            role="button"
+            aria-label="Sort by Profit {% if sort_by == 'profit' and sort_order == 'asc' %}(descending){% else %}(ascending){% endif %}"
+            tabindex="0"
+          >
+            <i
+              class="bi bi-caret-{% if sort_by == 'profit' and sort_order == 'asc' %}down-fill{% else %}up-fill{% endif %} icon {% if sort_by == 'profit' %}active{% endif %}"
+            ></i>
+          </a>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr>
+        <th scope="row" aria-label="Product Name">{{ item.product_name }}</th>
+        <td class="text-center" aria-label="Sale Quantity">{{ item.sales}}</td>
+        <td class="text-center" aria-label="Written Off Quantity">
+          {{ item.written_off }}
+        </td>
+        <td class="text-center text-success" aria-label="Revenue">
+          {{ item.revenue|floatformat:2 }}
+        </td>
+        <td class="text-center text-danger" aria-label="Loss">
+          {{ item.loss|floatformat:2}}
+        </td>
+        <td class="text-center text-info" aria-label="Profit">
+          {{ item.profit|floatformat:2 }}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% include 'partials/pagination.html' with hx_target="#report-table"%}
+</div>
+<div class="col-md-4">
+  <div class="card text-center shadow-sm mb-4">
+    <h5 class="card-header text-uppercase">Profit</h5>
+    <div class="card-body">
+      <p class="card-text fs-3 text-info" aria-label="Total profit">
+        {{ total_profit|floatformat:2 }}
+      </p>
+    </div>
+  </div>
+  <div class="card text-center shadow-sm mb-4">
+    <h5 class="card-header text-uppercase">Revenue</h5>
+    <div class="card-body">
+      <p class="card-text fs-3 text-success" aria-label="Total Revenue">
+        {{ total_revenue|floatformat:2 }}
+      </p>
+    </div>
+  </div>
+  <div class="card text-center shadow-sm">
+    <h5 class="card-header text-uppercase">Losses</h5>
+    <div class="card-body">
+      <p class="card-text fs-3 text-danger" aria-label="Total loss">
+        {{ total_loss|floatformat:2 }}
+      </p>
+    </div>
+  </div>
+</div>
+{% endif %}

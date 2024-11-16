@@ -1,0 +1,52 @@
+{% extends 'partials/base.html' %}
+
+<!-- prettier-ignore -->
+{% block nav %}{% endblock %}
+
+{% block content %}
+{% csrf_token %}
+
+<div class="container">
+  <div class="row my-3 justify-content-center">
+    <div class="col-md-5">
+      <div
+        class="border rounded p-3 shadow"
+        role="region"
+        aria-labelledby="delete-item-title"
+      >
+        <h3 class="text-uppercase fw-light" id="delete-item-title">
+          Delete Item
+        </h3>
+        <hr />
+        <div
+          class="pb-1 alert alert-danger"
+          role="alert"
+          aria-describedby="delete-message"
+        >
+          {% block message %} {% endblock %}
+        </div>
+        <form method="post" role="form" aria-labelledby="delete-item-title">
+          {% csrf_token %} {{form}}
+
+          <div class="d-flex justify-content-end">
+            <input
+              class="btn btn-danger me-2"
+              type="submit"
+              href="{% block delete-link %} {% endblock%}"
+              value="Delete"
+              aria-label="Confirm item deletion"
+            />
+            <a
+              href="{% block cancel-link %} {% endblock%}"
+              class="btn btn-secondary"
+              aria-label="Cancel item deletion and return to the previous page"
+              >Cancel</a
+            >
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
