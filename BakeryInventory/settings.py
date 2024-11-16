@@ -22,14 +22,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get("SECRET_KEY")
-
-#'django-insecure-%+y#o@h1b!q^87xg!dhl=g@oo7(-0z()fzp6ei&rvqey+*57jh'
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get('DEBUG', 'False').lower()=='true'
+DEBUG = os.getenv('DEBUG', 'False').lower()=='true'
 
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS").split(' ')
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(' ')
 
 
 # Application definition
@@ -131,11 +130,17 @@ USE_TZ = False
 
 STATIC_URL = 'static/'
 
+# STATICFILES_DIRS = [
+#     BASE_DIR/'css'
+# ]
+
 STATICFILES_DIRS = [
-    BASE_DIR/'css'
+    os.path.join(BASE_DIR/'css')
 ]
 
-STATIC_ROOT = (BASE_DIR/"static/")
+
+# STATIC_ROOT = (BASE_DIR/"static/")
+STATIC_ROOT = os.path.join(BASE_DIR,'static')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
