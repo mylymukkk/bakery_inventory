@@ -1,0 +1,31 @@
+.asteriskField {
+  color: red;
+}
+
+.icon {
+  color: #292b2c;
+  transition: color 0.3s;
+}
+
+.icon-light {
+  color: #f7f7f7;
+}
+
+.icon.active {
+  color: #5bc0de;
+  transition: color 0.3s;
+}
+
+.icon-light.active {
+  color: #5bc0de;
+}
+
+.pagination li a {
+  color: #5bc0de;
+}
+
+.pagination li.active-page a {
+  background: #5bc0de;
+  color: #f7f7f7;
+  border: 1px solid #5bc0de;
+}
